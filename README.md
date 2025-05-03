@@ -26,7 +26,7 @@ Aplicar conceitos fundamentais de **POO - Programação Orientada a Objetos**, c
 - Registro de reserva com:
   - Data e hora da reserva
   - Descrição da sala
-  - Capacidade (entre 1 e 39)
+  - Capacidade (entre 1 e 40)
 
 - Validações automáticas:
   - Datas e horários dentro do período permitido
@@ -36,13 +36,6 @@ Aplicar conceitos fundamentais de **POO - Programação Orientada a Objetos**, c
 - Exibição formatada das informações da reserva
 
 ---
-
-## 🗂 Estrutura do Projeto
-Modelos/
-│ ├── ConfiguracaoReserva.cs
-│ └── Reserva.cs
-Program.cs
-README.md
 
 ## Conceitos Utilizados
 
