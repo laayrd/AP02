@@ -3,23 +3,46 @@ using System.Reflection.Metadata;
 namespace ConsoleApp.Modelos;
 
 public class ConfiguracaoReserva {
-        public DateTime DataMinima { get; private set; }
-        public DateTime DataMaxima { get; private set; }
-        public TimeSpan HoraMinima { get; private set; }
-        public TimeSpan HoraMaxima { get; private set; }
+    private DateTime _dataMinima;
+    private DateTime _dataMaxima;
+    private TimeSpan _horaMinima;
+    private TimeSpan _horaMaxima;
+
+    public DateTime DataMinima { get {
+        return _dataMinima;
+    }}
+    public DateTime DataMaxima { get {
+        return _dataMaxima;
+    } }
+    public TimeSpan HoraMinima { get {
+        return _horaMinima;
+    } }
+    public TimeSpan HoraMaxima { get {
+        return _horaMaxima;
+    } }
+    public List<string> ErrosDeValidacao = [];    
 
     public ConfiguracaoReserva(DateTime dataMinima, DateTime dataMaxima, TimeSpan horaMinima, TimeSpan horaMaxima) {
-        if (dataMaxima <= dataMinima) {
-            throw new ArgumentException("Data mínima deve ser menor que a data máxima");
+        _dataMinima = dataMinima;
+        _dataMaxima = dataMaxima;
+        _horaMinima = horaMinima;
+        _horaMaxima = horaMaxima;
+        if (!validarConfiguracao()) {
+            throw new ArgumentException(string.Join("\n", ErrosDeValidacao));
         }
-        if (horaMaxima <= horaMinima) {
-            throw new ArgumentException("Hora mínima deve ser menor que a hora máxima");
-        }
+    }
 
-        DataMinima = dataMinima;
-        DataMaxima = dataMaxima;
-        HoraMinima = horaMinima;
-        HoraMaxima = horaMaxima;
+    public bool validarConfiguracao() {
+        if (_dataMinima <= DateTime.Today) {
+            ErrosDeValidacao.Add("A data mínima não pode ser anterior à data de hoje");
+        }
+        if (_dataMaxima <= _dataMinima) {
+            ErrosDeValidacao.Add("Data mínima deve ser menor que a data máxima");
+        }
+        if (_horaMaxima <= _horaMinima) {
+            ErrosDeValidacao.Add("Hora mínima deve ser menor que a hora máxima");
+        }
+        return ErrosDeValidacao.Count == 0;
     }
     public override string ToString() {
         return $"Datas Permitidas: {DataMinima: dd/MM/yyyy} até {DataMaxima:dd/MM/yyyy}\nHorários permitidos: {HoraMinima:hh\\:mm} até {HoraMaxima:hh\\:mm}";

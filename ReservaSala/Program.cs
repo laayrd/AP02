@@ -27,10 +27,7 @@ while (dataMaxima == null) {
     var entrada = Console.ReadLine();
     try {
         var data = DateTime.ParseExact(entrada, "dd/MM/yyyy", culturaBrasileira);
-        if (data <= dataMinima)
-            Console.WriteLine("Data máxima deve ser maior que a mínima.");
-        else
-            dataMaxima = data;
+        dataMaxima = data;
     }
     catch {
         Console.WriteLine("Data inválida");
@@ -53,10 +50,7 @@ while (horaMaxima == null) {
     var entrada = Console.ReadLine();
     try {
         var hora = TimeSpan.ParseExact(entrada, "hh\\:mm", CultureInfo.InvariantCulture);
-        if (hora <= horaMinima)
-            Console.WriteLine("Hora máxima deve ser maior que a mínima.");
-        else
-            horaMaxima = hora;
+        horaMaxima = hora;
     }
     catch {
         Console.WriteLine("Hora inválida");
@@ -66,12 +60,12 @@ while (horaMaxima == null) {
 ConfiguracaoReserva configuracao;
 
 try {
-    configuracao = new ConfiguracaoReserva((DateTime)dataMinima, (DateTime)dataMaxima, (TimeSpan)horaMinima, (TimeSpan)horaMaxima);
+    configuracao = new ((DateTime)dataMinima, (DateTime)dataMaxima, (TimeSpan)horaMinima, (TimeSpan)horaMaxima);
     Console.WriteLine("\nConfiguração criada com sucesso!\n");
     Console.WriteLine(configuracao);
 }
 catch (ArgumentException e) {
-    Console.WriteLine("Erro na configuração: " + e.Message);
+    Console.WriteLine("Erro na configuração: \n" + e.Message);
     return;
 }
 
