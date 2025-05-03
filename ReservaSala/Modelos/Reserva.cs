@@ -5,7 +5,6 @@ namespace ConsoleApp.Modelos;
 public class Reserva {
     private DateTime _data;
     private TimeSpan _hora;
-
     private int _capacidade;
     
     public DateTime Data { get {
@@ -34,32 +33,14 @@ public class Reserva {
     }
 
     public void RegistrarData(DateTime data) {
-        if (data < configuracao.DataMinima) {
-            throw new ArgumentException($"Data {data.ToString("dd/MM/yyyy")} precisa ser no mínimo {configuracao.DataMinima.ToString("dd/MM/yyyy")}");
-        }
-        if (data > configuracao.DataMaxima) {
-            throw new ArgumentException($"Data {data.ToString("dd/MM/yyyy")} precisa ser no máximo {configuracao.DataMaxima.ToString("dd/MM/yyyy")}");
-        }
         _data = data;
     }
 
     public void RegistrarHora(TimeSpan hora) {
-        if (hora < configuracao.HoraMinima) {
-            throw new ArgumentException($"Hora {hora} deve ser no mínimo {configuracao.HoraMinima}");
-        }
-        if (hora > configuracao.HoraMaxima) {
-            throw new ArgumentException($"Hora {hora} deve ser no máximo {configuracao.HoraMaxima}");
-        }
         _hora = hora;
     }
 
     public void RegistrarCapacidade(int capacidade) {
-        if (capacidade <= 0) {
-            throw new ArgumentException($"Capacide {capacidade} inválida, valor precisa ser positivo");
-        }
-        if (capacidade > 40) {
-            throw new ArgumentException($"Capacidade {capacidade} excede o limite máximo de 40 alunos");
-        }
         _capacidade = capacidade;
     }
 
@@ -71,16 +52,16 @@ public class Reserva {
             ErrosDeValidacao.Add($"Data {_data.ToString("dd/MM/yyyy")} precisa ser no máximo {configuracao.DataMaxima.ToString("dd/MM/yyyy")}");
         }
         if (_hora < configuracao.HoraMinima) {
-            ErrosDeValidacao.Add($"Hora {_hora} deve ser no mínimo {configuracao.HoraMinima}");
+            ErrosDeValidacao.Add($"Hora {_hora} deve ser no mínimo {configuracao.HoraMinima.ToString(@"hh\:mm")}");
         }
         if (_hora > configuracao.HoraMaxima) {
-            ErrosDeValidacao.Add($"Hora {_hora} deve ser no máximo {configuracao.HoraMaxima}");
+            ErrosDeValidacao.Add($"Hora {_hora} deve ser no máximo {configuracao.HoraMaxima.ToString(@"hh\:mm")}");
         }
         if (_capacidade <= 0) {
             ErrosDeValidacao.Add($"Capacide {_capacidade} inválida, valor precisa ser positivo");
         }
         if (_capacidade > 40) {
-            throw new ArgumentException($"Capacidade {_capacidade} excede o limite máximo de 40 alunos");
+            ErrosDeValidacao.Add($"Capacidade {_capacidade} excede o limite máximo de 40 alunos");
         }
         if (string.IsNullOrWhiteSpace(DescricaoDaSala)) {
             ErrosDeValidacao.Add("Descrição da Sala é obrigatória.");
